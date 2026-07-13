@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Ujian Misi Data Angkasa — 20 Soal Statistika SD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<style>
+:root {
+  --bg: #eef2ff;
+  --navy: #141a4d;
+  --navy2: #1d2566;
+  --indigo: #2f3c9e;
+  --cyan: #2fd3e8;
+  --cyan-dark: #12a3b8;
+  --amber: #ffb627;
+  --amber-dark: #e0930a;
+  --coral: #ff6b5b;
+  --coral-dark: #e14636;
+  --mint: #22c58b;
+  --mint-dark: #149467;
+  --violet: #8b6bff;
+  --violet-dark: #6b46e8;
+  --card: #ffffff;
+  --ink: #181c3a;
+  --ink-soft: #565b8a;
+  --radius-lg: 26px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+  --shadow-soft: 0 10px 30px rgba(20,26,77,0.12);
+  --shadow-pop: 0 14px 34px rgba(20,26,77,0.20);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255,255,255,0.10) 0, transparent 3%),
+    radial-gradient(circle at 85% 20%, rgba(255,255,255,0.08) 0, transparent 3%),
+    radial-gradient(ellipse at 50% -10%, #2a3380 0%, #141a4d 45%, #0b0f30 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow-x: hidden;
+}
+.stars {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+}
+.star {
+  position: absolute; background: #fff; border-radius: 50%;
+  animation: twinkle 3.4s ease-in-out infinite;
+}
+@keyframes twinkle { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+
+#device {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 860px;
+  background: linear-gradient(180deg, #1a2065, #12173f);
+  border-radius: 34px;
+  padding: 14px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+#screen {
+  background: var(--bg);
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: min(780px, 86vh);
+  max-height: min(780px, 86vh);
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.08);
+}
+
+#topbar {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px;
+  background: linear-gradient(180deg, #1d2566, #171d54);
+  color: #fff;
+  flex-shrink: 0;
+}
+#topbar .mission-title {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.15;
+  flex: 1;
+  min-width: 0;
+}
+#topbar .mission-title small {
+  display: block; font-family: 'Nunito', sans-serif; font-weight: 600;
+  font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--cyan);
+  opacity: .9;
+}
+#score-pill {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--amber);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+#page-counter { font-size: 11px; color: #c7cdfb; font-weight: 700; white-space: nowrap; }
+
+#stage {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px 10px;
+  scroll-behavior: smooth;
+}
+#stage::-webkit-scrollbar { width: 8px; }
+#stage::-webkit-scrollbar-thumb { background: #c7cde8; border-radius: 8px; }
+
+.page { animation: pageIn .45s ease both; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 12px;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--indigo); background: #e3e7ff; padding: 5px 12px; border-radius: 100px;
+  margin-bottom: 10px;
+}
+h1.page-title {
+  font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 24px;
+  margin: 0 0 6px; line-height: 1.2; color: var(--navy);
+}
+p.lead { font-size: 14.5px; color: var(--ink-soft); margin: 0 0 14px; line-height: 1.5; }
+.body-text { font-size: 15px; line-height: 1.6; color: var(--ink); }
+
+.card {
+  background: var(--card); border-radius: var(--radius-md); padding: 16px 18px;
+  box-shadow: var(--shadow-soft); margin-bottom: 14px;
+}
+.card.tinted-cyan { background: #e9fbfd; border: 2px solid #b7eff5; }
+.card.tinted-amber { background: #fff7e6; border: 2px solid #ffe3a8; }
+.card.tinted-mint { background: #eafff6; border: 2px solid #b7f2da; }
+
+.quiz-q { font-weight: 800; font-family: 'Baloo 2', sans-serif; font-size: 16px; color: var(--navy); margin-bottom: 12px; }
+.quiz-options { display: grid; gap: 8px; margin-bottom: 12px; }
+.quiz-option {
+  text-align: left; background: #f4f5fd; border: 2px solid #e2e4f7; border-radius: var(--radius-sm);
+  padding: 11px 14px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 14px;
+  cursor: pointer; color: var(--ink); transition: all .15s ease; display: flex; align-items: center; gap: 10px; width: 100%;
+}
+.quiz-option:hover { border-color: var(--cyan); background: #fff; }
+.quiz-option .letter {
+  width: 26px; height: 26px; border-radius: 50%; background: #dfe2f7; color: var(--indigo);
+  display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0;
+}
+.quiz-option.correct { background: #e2fbf1; border-color: var(--mint); color: #0b6b47; }
+.quiz-option.correct .letter { background: var(--mint); color: #fff; }
+.quiz-option.wrong { background: #ffeceb; border-color: var(--coral); color: #a12f22; }
+.quiz-option.wrong .letter { background: var(--coral); color: #fff; }
+.quiz-option[disabled] { cursor: default; }
+
+.feedback-box {
+  padding: 12px 16px; border-radius: var(--radius-sm); margin-top: 10px;
+  display: none; animation: pop .3s ease both;
+}
+.feedback-box.show { display: block; }
+.feedback-box.correct-style { background: #e2fbf1; border-left: 5px solid var(--mint); color: #0b6b47; }
+.feedback-box.wrong-style { background: #ffeceb; border-left: 5px solid var(--coral); color: #a12f22; }
+.explanation-text { margin-top: 6px; font-size: 13.5px; color: var(--ink); line-height: 1.5; border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 6px; }
+
+.illus-wrap { display: flex; justify-content: center; margin: 10px 0; background: #fff; padding: 12px; border-radius: var(--radius-md); box-shadow: inset 0 2px 6px rgba(0,0,0,0.03); }
+
+#navbar {
+  flex-shrink: 0; display: flex; align-items: center; gap: 10px;
+  padding: 12px 18px; background: #fff; border-top: 1px solid #e6e8f7;
+}
+#track {
+  flex: 1; display: flex; gap: 3px; align-items: center; overflow-x: auto; padding: 4px 2px;
+}
+#track::-webkit-scrollbar { display: none; }
+.dot {
+  width: 8px; height: 8px; border-radius: 50%; background: #d8dbf3; flex-shrink: 0; cursor: pointer; transition: all .2s ease;
+}
+.dot.done { background: var(--mint); }
+.dot.active { background: var(--coral); width: 16px; border-radius: 6px; }
+
+.btn {
+  font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 14px;
+  border: none; border-radius: 100px; padding: 10px 20px; cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease; box-shadow: 0 4px 0 rgba(0,0,0,0.15);
+}
+.btn:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.15); }
+.btn-primary { background: var(--coral); color: #fff; box-shadow: 0 4px 0 var(--coral-dark); }
+.btn-secondary { background: var(--mint); color: #fff; box-shadow: 0 4px 0 var(--mint-dark); }
+.btn-ghost { background: #e9ebfb; color: var(--indigo); box-shadow: 0 4px 0 #cfd3f4; }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+
+.tag { display: inline-block; font-size: 10.5px; font-weight: 800; padding: 3px 10px; border-radius: 100px; font-family: 'Baloo 2', sans-serif; text-transform: uppercase; margin-bottom: 6px;}
+.tag-easy { background: #e2fbf1; color: #0b6b47; }
+.tag-mid { background: #fff7e0; color: #8a5b00; }
+.tag-hard { background: #ffe6e3; color: #a12f22; }
+
+@media(max-width:600px){
+  h1.page-title { font-size: 20px; }
+  #stage { padding: 14px 12px 6px; }
+  .btn { padding: 8px 14px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div id="device">
+  <div id="screen">
+    <div id="topbar">
+      <div class="mission-title"><small>Bank Soal Evaluasi</small><span>Misi Data Angkasa</span></div>
+      <div id="score-pill">⭐ <span id="score-val">0</span> / 20</div>
+      <div id="page-counter">1 / 22</div>
+    </div>
+    <div id="stage"><div id="page-content" class="page"></div></div>
+    <div id="navbar">
+      <button class="btn btn-ghost" id="btn-prev" disabled>◀ Kembali</button>
+      <div id="track"></div>
+      <button class="btn btn-primary" id="btn-next">Mulai ▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- Defs SVG untuk Icon, Kunci, Grafik -->
+<svg width="0" height="0" style="position:absolute">
+<defs>
+<linearGradient id="g-cyan" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fe4f2"/><stop offset="1" stop-color="#12a3b8"/></linearGradient>
+<linearGradient id="g-coral" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9086"/><stop offset="1" stop-color="#e14636"/></linearGradient>
+<linearGradient id="g-amber" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd07a"/><stop offset="1" stop-color="#e0930a"/></linearGradient>
+<linearGradient id="g-mint" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fe8bc"/><stop offset="1" stop-color="#149467"/></linearGradient>
+<linearGradient id="g-violet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b3a1ff"/><stop offset="1" stop-color="#6b46e8"/></linearGradient>
+<radialGradient id="g-planet" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#8fd8ff"/><stop offset="55%" stop-color="#3ea6e0"/><stop offset="100%" stop-color="#1c5f96"/></radialGradient>
+
+<symbol id="icon-star" viewBox="0 0 24 24">
+  <path d="M12 2 L14.6 8.6 L21.8 9.1 L16.3 13.6 L18.2 20.6 L12 16.8 L5.8 20.6 L7.7 13.6 L2.2 9.1 L9.4 8.6 Z" fill="url(#g-amber)" stroke="#c97a00" stroke-width="0.6" stroke-linejoin="round"/>
+</symbol>
+<symbol id="icon-apple" viewBox="0 0 24 24">
+  <path d="M12 9c-3.5 0-5.5 2.6-5.5 6 0 3.6 2.3 7 4.4 7 1 0 1.3-.5 2.1-.5s1.1.5 2.1.5c1.9 0 4.4-3.2 4.4-6.6 0-3.6-2.3-6.4-5.4-6.4-.7 0-1.3.2-2.1.6-.8-.4-1.4-.6-2-.6z" fill="url(#g-coral)" stroke="#b8352a" stroke-width="0.5"/>
+  <path d="M12.3 8.6c0-1.4.8-2.6 2-3.1-.2 1.5-1 2.7-2 3.1z" fill="#149467"/>
+</symbol>
+<symbol id="icon-book" viewBox="0 0 24 24">
+  <rect x="4" y="4.5" width="16" height="15" rx="1.6" fill="url(#g-violet)" stroke="#4c2fb8" stroke-width="0.5"/>
+  <line x1="12" y1="4.5" x2="12" y2="19.5" stroke="#4c2fb8" stroke-width="0.8"/>
+  <line x1="6" y1="8" x2="10.4" y2="8" stroke="#ffffff" stroke-width="0.8" opacity="0.7"/>
+  <line x1="13.6" y1="8" x2="18" y2="8" stroke="#ffffff" stroke-width="0.8" opacity="0.7"/>
+</symbol>
+<symbol id="icon-rocket" viewBox="0 0 24 24">
+  <path d="M12 2C15 6 16 11 15 15 L9 15 C8 11 9 6 12 2Z" fill="url(#g-coral)"/>
+  <circle cx="12" cy="9" r="2" fill="#fff"/>
+  <path d="M9 15 L5 18 L7 15 Z" fill="url(#g-amber)"/>
+  <path d="M15 15 L19 18 L17 15 Z" fill="url(#g-amber)"/>
+</symbol>
+</defs>
+</svg>
+
+<script>
+/* ============ STARFIELD BACKGROUND ============ */
+(function(){
+  const c = document.getElementById('stars');
+  let html = '';
+  for(let i=0; i<60; i++){
+    const s = Math.random()*2.2+0.5;
+    html += `<div class="star" style="left:${Math.random()*100}%; top:${Math.random()*100}%; width:${s}px; height:${s}px; animation-delay:${Math.random()*3}s;"></div>`;
+  }
+  c.innerHTML = html;
+})();
+
+/* ============ MATH MATH HELPERS ============ */
+function polarToCartesian(cx,cy,r,angleDeg){
+  const a = (angleDeg-90) * Math.PI/180;
+  return { x: cx + r*Math.cos(a), y: cy + r*Math.sin(a) };
+}
+function arcPath(cx,cy,r,startAngle,endAngle){
+  if(endAngle - startAngle >= 359.99){ endAngle = startAngle + 359.99; }
+  const start = polarToCartesian(cx,cy,r,startAngle);
+  const end = polarToCartesian(cx,cy,r,endAngle);
+  const largeArc = (endAngle-startAngle) > 180 ? 1 : 0;
+  return `M ${cx} ${cy} L ${start.x.toFixed(2)} ${start.y.toFixed(2)} A ${r} ${r} 0 ${largeArc} 1 ${end.x.toFixed(2)} ${end.y.toFixed(2)} Z`;
+}
+
+/* ============ DYNAMIC CHART BUILDERS ============ */
+function barChart(data, maxVal, colors) {
+  const w = 420, h = 180;
+  const padL = 40, padB = 30, padT = 15, padR = 15;
+  const plotW = w - padL - padR, plotH = h - padT - padB;
+  const bw = (plotW / data.length) * 0.55;
+  const gap = plotW / data.length;
+  colors = colors || ['g-cyan', 'g-coral', 'g-amber', 'g-mint'];
+
+  let bars = '', labels = '', grid = '';
+  // Gridlines
+  for(let i=0; i<=4; i++){
+    const y = padT + plotH - (plotH * i / 4);
+    const labelY = Math.round(maxVal * i / 4);
+    grid += `<line x1="${padL}" y1="${y}" x2="${w-padR}" y2="${y}" stroke="#e2e4f6" stroke-width="1"/>`;
+    grid += `<text x="${padL - 8}" y="${y + 4}" text-anchor="end" font-family="Nunito" font-size="10" fill="#565b8a">${labelY}</text>`;
+  }
+
+  data.forEach((d, i) => {
+    const x = padL + gap * i + (gap - bw) / 2;
+    const bh = (d.value / maxVal) * plotH;
+    const y = padT + plotH - bh;
+    const col = `url(#${colors[i % colors.length]})`;
+    bars += `
+      <g>
+        <rect x="${x}" y="${y}" width="${bw}" height="${bh}" fill="${col}" rx="4" />
+        <text x="${x + bw/2}" y="${y - 6}" text-anchor="middle" font-family="Baloo 2" font-weight="700" font-size="11" fill="#181c3a">${d.value}</text>
+      </g>
+    `;
+    labels += `<text x="${x + bw/2}" y="${h - 10}" text-anchor="middle" font-family="Nunito" font-weight="700" font-size="11" fill="#181c3a">${d.label}</text>`;
+  });
+
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%">${grid}<line x1="${padL}" y1="${padT+plotH}" x2="${w-padR}" y2="${padT+plotH}" stroke="#a9aede" stroke-width="1.5"/>${bars}${labels}</svg>`;
+}
+
+function pictogramChart(data, keyUnit, iconId) {
+  const w = 420;
+  const rowH = 36, iconSize = 22, gap = 6, labelW = 90;
+  let rows = '';
+  
+  data.forEach((d, i) => {
+    const full = Math.floor(d.value / keyUnit);
+    const rem = (d.value / keyUnit) - full;
+    let iconsHtml = '';
+    let cx = labelW;
+
+    for (let k = 0; k < full; k++) {
+      iconsHtml += `<use href="#${iconId}" x="${cx}" y="${i * rowH + 6}" width="${iconSize}" height="${iconSize}"/>`;
+      cx += iconSize + gap;
+    }
+
+    if (rem > 0) {
+      iconsHtml += `
+      <!-- Render half icon using clip path -->
+      <g style="opacity:0.25;">
+        <use href="#${iconId}" x="${cx}" y="${i * rowH + 6}" width="${iconSize}" height="${iconSize}"/>
+      </g>
+      <svg x="${cx}" y="${i * rowH + 6}" width="${iconSize * rem}" height="${iconSize}" viewBox="0 0 ${iconSize} ${iconSize}" preserveAspectRatio="xMinYMin slice" overflow="hidden">
+        <use href="#${iconId}" x="0" y="0" width="${iconSize}" height="${iconSize}"/>
+      </svg>`;
+    }
+
+    rows += `
+      <text x="0" y="${i * rowH + 21}" font-family="Nunito" font-weight="800" font-size="12" fill="#181c3a">${d.label}</text>
+      ${iconsHtml}
+    `;
+  });
+
+  const h = data.length * rowH + 10;
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%">${rows}</svg>`;
+}
+
+function pieChart(segments, useDegrees) {
+  const size = 180;
+  const cx = size/2, cy = size/2, r = size * 0.38;
+  let angle = 0;
+  let paths = '', labels = '';
+  const outerR = r * 1.25;
+
+  segments.forEach((s) => {
+    const sweep = (s.percent / 100) * 360;
+    const isMissing = !!s.missing;
+    const fill = isMissing ? '#e2e4f6' : `url(#${s.color})`;
+    const stroke = isMissing ? '#b9bde0' : '#ffffff';
+    const dash = isMissing ? 'stroke-dasharray="3,3"' : '';
+    
+    paths += `<path d="${arcPath(cx,cy,r,angle,angle+sweep)}" fill="${fill}" stroke="${stroke}" stroke-width="1.5" ${dash}/>`;
+    
+    const mid = angle + sweep/2;
+    const lp = polarToCartesian(cx, cy, outerR, mid);
+    const txt = isMissing ? '?' : (useDegrees ? Math.round(s.percent / 100 * 360) + '°' : s.percent + '%');
+    
+    labels += `<text x="${lp.x}" y="${lp.y + 4}" text-anchor="middle" font-family="Baloo 2" font-weight="800" font-size="11" fill="${isMissing ? '#8a8fc0' : '#181c3a'}">${txt}</text>`;
+    angle += sweep;
+  });
+
+  return `<svg viewBox="0 0 ${size} ${size}" width="100%"><ellipse cx="${cx}" cy="${cy+r+4}" rx="${r*0.9}" ry="5" fill="rgba(20,26,77,0.08)"/>${paths}<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#ffffff" stroke-width="1"/>${labels}</svg>`;
+}
+
+/* ============ QUESTIONS DATA (20 Premium Questions) ============ */
+const SOAL_MISI = [
+  // --- DIAGRAM BATANG (No 1 - 6) ---
+  {
+    type: "bar",
+    section: "Diagram Batang",
+    tag: "tag-easy",
+    tagText: "Mudah",
+    title: "Membaca Turus / Tally",
+    lead: "ORBIT mencatat banyaknya komet yang melintas menggunakan turus (tally) di bawah ini.",
+    illus: () => `
+      <div style="text-align:center; padding: 8px;">
+        <svg width="150" height="50" style="margin:0 auto; display:block;">
+          <g stroke="var(--navy)" stroke-width="4.5" stroke-linecap="round">
+            <line x1="20" y1="10" x2="20" y2="40" />
+            <line x1="32" y1="10" x2="32" y2="40" />
+            <line x1="44" y1="10" x2="44" y2="40" />
+            <line x1="56" y1="10" x2="56" y2="40" />
+            <line x1="12" y1="35" x2="64" y2="15" stroke="var(--coral)" stroke-width="5" />
+          </g>
+          <g stroke="var(--navy)" stroke-width="4.5" stroke-linecap="round">
+            <line x1="90" y1="10" x2="90" y2="40" />
+            <line x1="102" y1="10" x2="102" y2="40" />
+          </g>
+        </svg>
+      </div>
+    `,
+    q: "Berapa banyak komet yang berhasil dicatat oleh ORBIT?",
+    options: ["5 komet", "6 komet", "7 komet", "8 komet"],
+    correctIdx: 2,
+    explain: "Satu ikat turus dengan garis menyilang merah bernilai 5. Ditambah 2 turus lepas di kanannya, jadi totalnya adalah: 5 + 2 = 7 komet."
+  },
+  {
+    type: "bar",
+    section: "Diagram Batang",
+    tag: "tag-easy",
+    tagText: "Mudah",
+    title: "Membaca Nilai Tertinggi",
+    lead: "Perhatikan diagram batang berikut yang menampilkan data planet mini yang dikunjungi pesawat ORBIT.",
+    illus: () => `<div class="illus-wrap">${barChart([{label:'Ares',value:8},{label:'Ceres',value:12},{label:'Eris',value:5},{label:'Pluto',value:15}], 16)}</div>`,
+    q: "Planet mini mana yang paling sering dikunjungi oleh pesawat ORBIT?",
+    options: ["Ares", "Ceres", "Eris", "Pluto"],
+    correctIdx: 3,
+    explain: "Batang tertinggi adalah planet mini Pluto dengan nilai 15 kali kunjungan."
+  },
+  {
+    type: "bar",
+    section: "Diagram Batang",
+    tag: "tag-mid",
+    tagText: "Sedang",
+    title: "Menghitung Selisih Data",
+    lead: "Gunakan diagram batang kunjungan planet mini di bawah ini untuk menghitung selisih.",
+    illus: () => `<div class="illus-wrap">${barChart([{label:'Ares',value:8},{label:'Ceres',value:12},{label:'Eris',value:5},{label:'Pluto',value:15}], 16)}</div>`,
+    q: "Berapa selisih banyaknya kunjungan antara Ceres dan Eris?",
+    options: ["5 kali", "7 kali", "9 kali", "12 kali"],
+    correctIdx: 1,
+    explain: "Kunjungan Ceres = 12 kali. Kunjungan Eris = 5 kali. Selisihnya = 12 − 5 = 7 kali."
+  },
+  {
+    type: "bar",
+    section: "Diagram Batang",
+    tag: "tag-mid",
+    tagText: "Sedang",
+    title: "Menjumlahkan Seluruh Data",
+    lead: "Hitung total data dari diagram batang kunjungan planet mini berikut.",
+    illus: () => `<div class="illus-wrap">${barChart([{label:'Ares',value:8},{label:'Ceres',value:12},{label:'Eris',value:5},{label:'Pluto',value:15}], 16)}</div>`,
+    q: "Berapa total seluruh kunjungan yang dilakukan pesawat ORBIT pada keempat planet mini tersebut?",
+    options: ["35 kali", "38 kali", "40 kali", "42 kali"],
+    correctIdx: 2,
+    explain: "Total kunjungan = Ares (8) + Ceres (12) + Eris (5) + Pluto (15) = 40 kali kunjungan."
+  },
+  {
+    type: "bar",
+    section: "Diagram Batang",
+    tag: "tag-easy",
+    tagText: "Mudah",
+    title: "Elemen Diagram Batang",
+    lead: "Sebuah diagram batang memiliki sumbu tegak (vertikal) dan sumbu mendatar (horizontal).",
+    illus: () => ``,
+    q: "Pada diagram batang yang menyajikan data tinggi badan siswa, biasanya angka-angka penunjuk ukuran (cm) diletakkan di...",
+    options: ["Sumbu mendatar", "Sumbu tegak", "Judul diagram", "Kunci keterangan"],
+    correctIdx: 1,
+    explain: "Sumbu tegak (vertikal) umumnya digunakan untuk skala nilai kuantitatif atau angka ukuran (seperti tinggi badan, jumlah siswa), sedangkan nama kategori diletakkan di sumbu mendatar."
+  },
+  {
+    type: "bar",
+    section: "Diagram Batang",
+    tag: "tag-hard",
+    tagText: "Menantang",
+    title: "Analisis & Perbandingan Nilai",
+    lead: "Pesawat penjelajah mencatat jumlah bahan bakar cadangan (dalam liter) di 4 pos angkasa.",
+    illus: () => `<div class="illus-wrap">${barChart([{label:'Pos A',value:14},{label:'Pos B',value:22},{label:'Pos C',value:16},{label:'Pos D',value:8}], 24)}</div>`,
+    q: "Pos angkasa mana yang memiliki bahan bakar cadangan tepat dua kali lipat dari milik Pos A?",
+    options: ["Pos B", "Pos C", "Pos D", "Tidak ada pos yang tepat"],
+    explain: "Bahan bakar Pos A adalah 14 liter. Dua kali lipat dari Pos A berarti 14 × 2 = 28 liter. Berdasarkan diagram, nilai tertinggi hanya 22 liter (Pos B). Maka, tidak ada pos yang tepat bernilai 28 liter.",
+    correctIdx: 3
+  },
+
+  // --- PIKTOGRAM (No 7 - 13) ---
+  {
+    type: "pic",
+    section: "Planet Piktogram",
+    tag: "tag-easy",
+    tagText: "Mudah",
+    title: "Membaca Kunci Piktogram",
+    lead: "Perhatikan piktogram mainan robot astronot milik anak-anak di pangkalan udara.",
+    illus: () => `
+      <div class="illus-wrap" style="flex-direction:column; align-items:center;">
+        ${pictogramChart([{label:'Aero',value:6},{label:'Bora',value:4}], 2, 'icon-rocket')}
+        <div class="card tinted-amber" style="margin-top:8px; padding:6px 12px; font-size:12px; font-weight:700;">Kunci: 1 🚀 = mewakili 2 robot mainan</div>
+      </div>
+    `,
+    q: "Berapa banyak robot mainan asli yang dimiliki oleh Aero?",
+    options: ["3 robot", "4 robot", "6 robot", "8 robot"],
+    correctIdx: 2,
+    explain: "Aero memiliki 3 simbol roket. Karena setiap 1 roket mewakili 2 mainan, maka total robot mainan Aero adalah 3 × 2 = 6 robot."
+  },
+  {
+    type: "pic",
+    section: "Planet Piktogram",
+    tag: "tag-mid",
+    tagText: "Sedang",
+    title: "Kunci Skala Lebih Besar",
+    lead: "ORBIT mendata buku tentang astronomi yang dipinjam dari perpustakaan galaksi.",
+    illus: () => `
+      <div class="illus-wrap" style="flex-direction:column; align-items:center;">
+        ${pictogramChart([{label:'Senin',value:15},{label:'Selasa',value:10},{label:'Rabu',value:20}], 5, 'icon-book')}
+        <div class="card tinted-amber" style="margin-top:8px; padding:6px 12px; font-size:12px; font-weight:700;">Kunci: 1 📘 = mewakili 5 buku dipinjam</div>
+      </div>
+    `,
+    q: "Berapa total buku yang dipinjam pada hari Senin dan Rabu jika digabungkan?",
+    options: ["7 buku", "25 buku", "35 buku", "40 buku"],
+    correctIdx: 2,
+    explain: "Senin memiliki 3 simbol (3 × 5 = 15 buku). Rabu memiliki 4 simbol (4 × 5 = 20 buku). Total gabungan = 15 + 20 = 35 buku."
+  },
+  {
+    type: "pic",
+    section: "Planet Piktogram",
+    tag: "tag-mid",
+    tagText: "Sedang",
+    title: "Memahami Simbol Setengah (1/2)",
+    lead: "Berikut adalah data jumlah buah apel bintang hasil panen kebun hidroponik luar angkasa.",
+    illus: () => `
+      <div class="illus-wrap" style="flex-direction:column; align-items:center;">
+        ${pictogramChart([{label:'Zona Alfa',value:10}], 4, 'icon-apple')}
+        <div class="card tinted-amber" style="margin-top:8px; padding:6px 12px; font-size:12px; font-weight:700;">Kunci: 1 🍎 = mewakili 4 buah apel</div>
+      </div>
+    `,
+    q: "Pada Zona Alfa terdapat 2 simbol buah apel penuh dan 1 simbol setengah buah apel. Berapa banyak buah apel di Zona Alfa?",
+    options: ["6 buah", "8 buah", "10 buah", "12 buah"],
+    correctIdx: 2,
+    explain: "2 simbol penuh = 2 × 4 = 8 buah. 1 simbol setengah = setengah dari kunci = 4 ÷ 2 = 2 buah. Total keseluruhan = 8 + 2 = 10 buah."
+  },
+  {
+    type: "pic",
+    section: "Planet Piktogram",
+    tag: "tag-mid",
+    tagText: "Sedang",
+    title: "Menghitung Selisih Piktogram",
+    lead: "Perhatikan piktogram bintang tanda jasa yang diraih oleh tiga perwira angkasa.",
+    illus: () => `
+      <div class="illus-wrap" style="flex-direction:column; align-items:center;">
+        ${pictogramChart([{label:'Koba',value:30},{label:'Zola',value:10}], 10, 'icon-star')}
+        <div class="card tinted-amber" style="margin-top:8px; padding:6px 12px; font-size:12px; font-weight:700;">Kunci: 1 ⭐ = mewakili 10 bintang penghargaan</div>
+      </div>
+    `,
+    q: "Berapakah selisih tanda jasa bintang penghargaan asli milik Koba dan Zola?",
+    options: ["2 bintang", "10 bintang", "20 bintang", "30 bintang"],
+    correctIdx: 2,
+    explain: "Bintang Koba = 3 simbol penuh × 10 = 30 bintang. Bintang Zola = 1 simbol penuh × 10 = 10 bintang. Selisih = 30 − 10 = 20 bintang."
+  },
+  {
+    type: "pic",
+    section: "Planet Piktogram",
+    tag: "tag-hard",
+    tagText: "Menantang",
+    title: "Mencari Nilai Kunci Utama",
+    lead: "Sebuah piktogram menyajikan data penjualan baju astronaut. Di piktogram tertulis:",
+    illus: () => `
+      <div class="card tinted-cyan" style="text-align:center;">
+        <div class="body-text">Total penjualan sebenarnya: <b>50 baju</b><br>Jumlah simbol baju yang digambar: <b>10 simbol penuh</b></div>
+      </div>
+    `,
+    q: "Berapakah nilai perwakilan 1 simbol baju dalam piktogram tersebut?",
+    options: ["1 simbol = 2 baju", "1 simbol = 5 baju", "1 simbol = 10 baju", "1 simbol = 50 baju"],
+    correctIdx: 1,
+    explain: "Kunci perwakilan simbol dihitung dengan membagi total data asli dengan jumlah simbol: 50 baju ÷ 10 simbol = 5 baju. Jadi, 1 simbol mewakili 5 baju."
+  },
+  {
+    type: "pic",
+    section: "Planet Piktogram",
+    tag: "tag-mid",
+    tagText: "Sedang",
+    title: "Membaca Piktogram Campuran",
+    lead: "Anak-anak mendata buah kesukaan mereka di Bumi menggunakan simbol apel.",
+    illus: () => `
+      <div class="illus-wrap" style="flex-direction:column; align-items:center;">
+        ${pictogramChart([{label:'Apel',value:6},{label:'Pisang',value:3}], 2, 'icon-apple')}
+        <div class="card tinted-amber" style="margin-top:8px; padding:6px 12px; font-size:12px; font-weight:700;">Kunci: 1 🍎 = mewakili 2 anak</div>
+      </div>
+    `,
+    q: "Berapakah total anak yang menyukai Pisang berdasarkan piktogram di atas?",
+    options: ["2 anak", "3 anak", "4 anak", "5 anak"],
+    correctIdx: 1,
+    explain: "Suka Pisang digambarkan dengan 1 simbol penuh dan 1 simbol setengah. 1 simbol penuh = 2 anak, 1 simbol setengah = 1 anak. Total = 2 + 1 = 3 anak."
+  },
+  {
+    type: "pic",
+    section: "Planet Piktogram",
+    tag: "tag-hard",
+    tagText: "Menantang",
+    title: "Piktogram Skala Kompleks",
+    lead: "ORBIT menemukan piktogram data peluncuran satelit luar angkasa selama 3 bulan.",
+    illus: () => `
+      <div class="illus-wrap" style="flex-direction:column; align-items:center;">
+        ${pictogramChart([{label:'Mei',value:15},{label:'Juni',value:25},{label:'Juli',value:30}], 10, 'icon-rocket')}
+        <div class="card tinted-amber" style="margin-top:8px; padding:6px 12px; font-size:12px; font-weight:700;">Kunci: 1 🚀 = mewakili 10 satelit meluncur</div>
+      </div>
+    `,
+    q: "Berapakah jumlah satelit yang meluncur pada bulan Mei dan Juni jika digabungkan?",
+    options: ["35 satelit", "40 satelit", "45 satelit", "50 satelit"],
+    correctIdx: 1,
+    explain: "Mei = 1½ simbol = 15 satelit. Juni = 2½ simbol = 25 satelit. Total gabungan Mei dan Juni = 15 + 25 = 40 satelit."
+  },
+
+  // --- DIAGRAM LINGKARAN (No 14 - 20) ---
+  {
+    type: "pie",
+    section: "Planet Lingkaran",
+    tag: "tag-easy",
+    tagText: "Mudah",
+    title: "Lingkaran Persen Penuh",
+    lead: "Sebuah diagram lingkaran membagi jenis-jenis kendaraan ruang angkasa yang diparkir di stasiun.",
+    illus: () => ``,
+    q: "Berapakah total persentase (%) yang harus dimiliki oleh satu lingkaran penuh pada diagram lingkaran?",
+    options: ["50%", "90%", "100%", "360%"],
+    correctIdx: 2,
+    explain: "Satu lingkaran penuh dalam satuan persen selalu bernilai tepat 100%."
+  },
+  {
+    type: "pie",
+    section: "Planet Lingkaran",
+    tag: "tag-mid",
+    tagText: "Sedang",
+    title: "Mencari Persen yang Hilang",
+    lead: "Perhatikan diagram lingkaran persen tentang misi eksplorasi luar angkasa berikut.",
+    illus: () => `<div class="illus-wrap">${pieChart([{label:'Alfa', percent:40, color:'g-cyan'},{label:'Beta', percent:35, color:'g-coral'},{label:'Gama', percent:25, color:'g-amber', missing:true}], false)}</div>`,
+    q: "Misi Alfa bernilai 40%, Misi Beta bernilai 35%, dan Misi Gama belum diketahui (?). Berapa persentase Misi Gama?",
+    options: ["15%", "20%", "25%", "30%"],
+    correctIdx: 2,
+    explain: "Total persentase lingkaran adalah 100%. Misi Gama (?) = 100% − (40% + 35%) = 100% − 75% = 25%."
+  },
+  {
+    type: "pie",
+    section: "Planet Lingkaran",
+    tag: "tag-easy",
+    tagText: "Mudah",
+    title: "Lingkaran Derajat Penuh",
+    lead: "Diagram lingkaran terkadang disajikan dalam bentuk satuan sudut (derajat).",
+    illus: () => ``,
+    q: "Berapakah total ukuran derajat (°) untuk satu lingkaran penuh?",
+    options: ["90°", "180°", "270°", "360°"],
+    correctIdx: 3,
+    explain: "Satu putaran lingkaran penuh dalam geometri matematika selalu berukuran 360°."
+  },
+  {
+    type: "pie",
+    section: "Planet Lingkaran",
+    tag: "tag-mid",
+    tagText: "Sedang",
+    title: "Mencari Derajat yang Hilang",
+    lead: "Berikut data pembagian wilayah pendaratan kapsul luar angkasa dalam derajat (°).",
+    illus: () => `<div class="illus-wrap">${pieChart([{label:'Utara', percent:33.3, color:'g-cyan'},{label:'Timur', percent:41.7, color:'g-amber'},{label:'Barat', percent:25, color:'g-violet', missing:true}], true)}</div>`,
+    q: "Jika Wilayah Utara memiliki sudut 120°, Wilayah Timur 150°, berapakah ukuran derajat untuk Wilayah Barat (?)?",
+    options: ["60°", "80°", "90°", "100°"],
+    correctIdx: 2,
+    explain: "Total lingkaran penuh = 360°. Sudut Wilayah Barat (?) = 360° − (120° + 150°) = 360° − 270° = 90°."
+  },
+  {
+    type: "pie",
+    section: "Planet Lingkaran",
+    tag: "tag-mid",
+    tagText: "Sedang",
+    title: "Sudut Siku-Siku (Sari/Seperempat)",
+    lead: "Potongan juring pada diagram lingkaran sering kali membentuk sudut siku-siku tegak lurus.",
+    illus: () => `
+      <div class="illus-wrap">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="45" fill="#f4f5fd" stroke="#cfd3f4" stroke-width="2"/>
+          <path d="${arcPath(60,60,45,0,90)}" fill="url(#g-coral)"/>
+          <line x1="60" y1="60" x2="60" y2="15" stroke="#1d2566" stroke-dasharray="2,2"/>
+          <line x1="60" y1="60" x2="105" y2="60" stroke="#1d2566" stroke-dasharray="2,2"/>
+          <path d="M 68 60 L 68 52 L 60 52" fill="none" stroke="#1d2566" stroke-width="1.5"/>
+        </svg>
+      </div>
+    `,
+    q: "Sebuah potongan juring membentuk sudut siku-siku (seperempat lingkaran). Jika diagram ditulis dalam persen, berapa persen nilai juring tersebut?",
+    options: ["20%", "25%", "50%", "75%"],
+    correctIdx: 1,
+    explain: "Seperempat dari lingkaran penuh (100%) adalah 100% ÷ 4 = 25%. (Dalam derajat, sudut siku-siku bernilai 90°)."
+  },
+  {
+    type: "pie",
+    section: "Planet Lingkaran",
+    tag: "tag-hard",
+    tagText: "Menantang",
+    title: "Menghitung Jumlah Asli (Persen)",
+    lead: "Ada 40 astronot cilik yang disurvei tentang makanan kaleng luar angkasa kesukaan mereka.",
+    illus: () => `<div class="illus-wrap">${pieChart([{label:'Sup', percent:50, color:'g-cyan'},{label:'Kari', percent:25, color:'g-coral'},{label:'Roti', percent:25, color:'g-amber'}], false)}</div>`,
+    q: "Jika 25% astronot cilik memilih makanan kaleng rasa 'Kari', berapakah jumlah anak sebenarnya yang menyukai Kari?",
+    options: ["5 anak", "10 anak", "15 anak", "20 anak"],
+    correctIdx: 1,
+    explain: "Jumlah anak = 25% dari total 40 anak. 25% sama dengan seperempat (1/4) bagian. Maka caranya: 40 ÷ 4 = 10 anak."
+  },
+  {
+    type: "pie",
+    section: "Planet Lingkaran",
+    tag: "tag-hard",
+    tagText: "Menantang",
+    title: "Menghitung Jumlah Asli (Derajat)",
+    lead: "Sebuah perpustakaan angkasa mengelompokkan 120 buku cerita astronomi.",
+    illus: () => `
+      <div class="illus-wrap">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="45" fill="#f4f5fd" stroke="#cfd3f4" stroke-width="2"/>
+          <path d="${arcPath(60,60,45,0,90)}" fill="url(#g-violet)"/>
+          <text x="80" y="45" font-family="Baloo 2" font-size="11" font-weight="800">90°</text>
+        </svg>
+      </div>
+    `,
+    q: "Kategori cerita fiksi ilmiah digambarkan dengan juring sudut 90°. Berapakah banyaknya buku fiksi ilmiah dari total seluruh 120 buku?",
+    options: ["20 buku", "30 buku", "40 buku", "90 buku"],
+    correctIdx: 1,
+    explain: "Sudut 90° adalah seperempat (1/4) dari total putaran penuh 360°. Maka jumlah buku fiksi ilmiah adalah seperempat dari total 120 buku: 120 ÷ 4 = 30 buku."
+  }
+];
+
+/* ============ ENGINE & STATE MANAGEMENT ============ */
+let currentIdx = -1; // -1 means welcome page
+let answersState = Array(SOAL_MISI.length).fill(null); // stores user choice index
+let score = 0;
+
+const contentEl = document.getElementById('page-content');
+const trackEl = document.getElementById('track');
+const counterEl = document.getElementById('page-counter');
+const sectionLabelEl = document.querySelector('#topbar .mission-title span');
+const btnPrev = document.getElementById('btn-prev');
+const btnNext = document.getElementById('btn-next');
+const scoreValEl = document.getElementById('score-val');
+
+function buildTrack(){
+  trackEl.innerHTML = '';
+  // Welcome dot
+  const dotW = document.createElement('div');
+  dotW.className = 'dot';
+  dotW.dataset.idx = -1;
+  dotW.addEventListener('click', () => goTo(-1));
+  trackEl.appendChild(dotW);
+
+  SOAL_MISI.forEach((s, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    dot.dataset.idx = i;
+    dot.addEventListener('click', () => goTo(i));
+    trackEl.appendChild(dot);
+  });
+
+  // End dot
+  const dotE = document.createElement('div');
+  dotE.className = 'dot';
+  dotE.dataset.idx = SOAL_MISI.length;
+  dotE.addEventListener('click', () => goTo(SOAL_MISI.length));
+  trackEl.appendChild(dotE);
+}
+
+function refreshTrack(){
+  const dots = trackEl.querySelectorAll('.dot');
+  dots.forEach(d => {
+    const idx = parseInt(d.dataset.idx, 10);
+    d.classList.toggle('active', idx === currentIdx);
+    
+    // Done style if answered (for questions)
+    if(idx >= 0 && idx < SOAL_MISI.length) {
+      d.classList.toggle('done', answersState[idx] !== null);
+    }
+  });
+}
+
+function handleOptionClick(optIdx) {
+  if (answersState[currentIdx] !== null) return; // already answered
+  
+  answersState[currentIdx] = optIdx;
+  const s = SOAL_MISI[currentIdx];
+  const options = document.querySelectorAll('.quiz-option');
+  
+  options.forEach((o, idx) => {
+    o.disabled = true;
+    if (idx === s.correctIdx) {
+      o.classList.add('correct');
+    }
+  });
+
+  const feedbackBox = document.getElementById('feedback');
+  feedbackBox.classList.add('show');
+
+  if (optIdx === s.correctIdx) {
+    feedbackBox.className = 'feedback-box show correct-style';
+    document.getElementById('feedback-title').innerHTML = '🚀 Luar Biasa! Jawabanmu Tepat!';
+    score++;
+    scoreValEl.textContent = score;
+  } else {
+    options[optIdx].classList.add('wrong');
+    feedbackBox.className = 'feedback-box show wrong-style';
+    document.getElementById('feedback-title').innerHTML = '☄️ Kurang Tepat, Jangan Menyerah!';
+  }
+
+  refreshTrack();
+  saveQuizProgress();
+}
+
+function saveQuizProgress() {
+  // Option for progress persistency
+}
+
+function goTo(idx) {
+  if (idx < -1) idx = -1;
+  if (idx > SOAL_MISI.length) idx = SOAL_MISI.length;
+  currentIdx = idx;
+
+  if (idx === -1) {
+    // RENDER WELCOME PAGE
+    sectionLabelEl.textContent = "Bersiap Berangkat";
+    counterEl.textContent = "Intro";
+    contentEl.innerHTML = `
+      <div style="text-align:center; padding: 10px 0;">
+        <div class="eyebrow">⭐ Evaluasi Akhir</div>
+        <h1 class="page-title" style="font-size:28px;">Ujian Misi Data Angkasa 🌌</h1>
+        <p class="lead" style="max-width:480px; margin: 10px auto;">Ayo uji kemampuan analisis datamu dengan menyelesaikan <b>20 soal evaluasi pilihan ganda</b> yang asyik dan interaktif!</p>
+        <div class="illus-wrap" style="background:transparent; box-shadow:none;">
+          <svg width="220" height="130" viewBox="0 0 220 130">
+            <g transform="translate(10,10)">
+              <ellipse cx="60" cy="80" rx="40" ry="10" fill="none" stroke="#ffb627" stroke-width="3" opacity="0.55" transform="rotate(-18 60 80)"/>
+              <circle cx="60" cy="80" r="26" fill="url(#g-planet)"/>
+              <ellipse cx="60" cy="80" rx="40" ry="10" fill="none" stroke="#ffb627" stroke-width="3" opacity="0.85" stroke-dasharray="30 150" transform="rotate(-18 60 80)"/>
+            </g>
+            <g transform="translate(130, -10)">
+              <ellipse cx="30" cy="86" rx="14" ry="4" fill="rgba(20,26,77,0.15)"/>
+              <path d="M30 4 C42 18 44 42 40 62 L20 62 C16 42 18 18 30 4 Z" fill="url(#g-coral)" stroke="#a12f22" stroke-width="1"/>
+              <circle cx="30" cy="34" r="7" fill="#eaf6ff" stroke="#12a3b8" stroke-width="2"/>
+              <path d="M22 64 L38 64 L33 82 L27 82 Z" fill="#ffb627"/>
+            </g>
+          </svg>
+        </div>
+        <div class="card tinted-cyan" style="text-align:left; margin-top:14px;">
+          <div class="body-text" style="font-size:14px;">
+            <b>📋 Panduan Ujian Astronom:</b><br>
+            1. Selesaikan semua 20 soal statistika dasar kelas 3-4 SD.<br>
+            2. Tekan pilihan jawaban untuk memeriksa kebenaran secara langsung.<br>
+            3. Baca penjelasan ilmiah untuk memperkuat konsep belajarmu!<br>
+            4. Raih lencana pangkat tertinggi di akhir ujian.
+          </div>
+        </div>
+      </div>
+    `;
+    btnPrev.disabled = true;
+    btnNext.textContent = "Mulai Ujian ▶";
+    btnNext.className = "btn btn-primary";
+
+  } else if (idx === SOAL_MISI.length) {
+    // RENDER END PAGE
+    sectionLabelEl.textContent = "Ujian Selesai";
+    counterEl.textContent = "Hasil Akhir";
+    
+    let badge = "Astronot Pemula 🛰️";
+    let message = "Ayo belajar lagi bersama ORBIT untuk memperkuat keahlian membaca datamu!";
+    let themeClass = "tinted-cyan";
+    if (score >= 18) {
+      badge = "Komandan Agung Data Galaksi 👑🪐";
+      message = "Luar biasa sempurna! Kamu adalah ahli statistik angkasa terbaik!";
+      themeClass = "tinted-mint";
+    } else if (score >= 12) {
+      badge = "Perwira Peneliti Data 🚀⭐";
+      message = "Kerja bagus! Kamu sangat mahir membaca grafik statistika.";
+      themeClass = "tinted-amber";
+    }
+
+    contentEl.innerHTML = `
+      <div style="text-align:center; padding: 12px 0;">
+        <div class="eyebrow">🎉 Misi Selesai!</div>
+        <h1 class="page-title">Skor Ujian Angkasamu</h1>
+        
+        <div style="font-size:52px; font-weight:800; color:var(--indigo); font-family:'Baloo 2'; margin: 10px 0;">
+          ${Math.round(score/SOAL_MISI.length*100)} <span style="font-size:24px; font-weight:600; color:var(--ink-soft);">/ 100</span>
+        </div>
+
+        <div class="card ${themeClass}" style="margin: 14px 0; text-align:center;">
+          <h2 class="sub" style="margin:0 0 6px; font-size:18px;">Pangkat yang Diraih:</h2>
+          <div style="font-family:'Baloo 2'; font-weight:800; font-size:20px; color:var(--navy);">${badge}</div>
+          <p class="body-text" style="font-size:14px; margin-top:8px;">Berhasil menjawab dengan benar sebanyak <b>${score} dari 20 soal</b>. ${message}</p>
+        </div>
+
+        <button class="btn btn-secondary" onclick="ulangUjian()" style="margin-top:10px;">🔁 Ulangi Ujian</button>
+      </div>
+    `;
+    btnPrev.disabled = false;
+    btnNext.textContent = "Selesai ✔";
+    btnNext.disabled = true;
+
+  } else {
+    // RENDER QUESTION PAGE
+    const s = SOAL_MISI[idx];
+    sectionLabelEl.textContent = s.section;
+    counterEl.textContent = `${idx + 1} / ${SOAL_MISI.length}`;
+
+    let optionsHtml = s.options.map((opt, oIdx) => {
+      let extraClass = '';
+      let isDisabled = '';
+      if (answersState[idx] !== null) {
+        isDisabled = 'disabled';
+        if (oIdx === s.correctIdx) extraClass = 'correct';
+        else if (oIdx === answersState[idx]) extraClass = 'wrong';
+      }
+      return `
+        <button class="quiz-option ${extraClass}" onclick="handleOptionClick(${oIdx})" ${isDisabled}>
+          <span class="letter">${['A','B','C','D'][oIdx]}</span>
+          <span>${opt}</span>
+        </button>
+      `;
+    }).join('');
+
+    let isShowFeedback = answersState[idx] !== null ? 'show' : '';
+    let feedbackThemeClass = '';
+    let feedbackTitle = '';
+    if (answersState[idx] !== null) {
+      if (answersState[idx] === s.correctIdx) {
+        feedbackThemeClass = 'correct-style';
+        feedbackTitle = '🚀 Luar Biasa! Jawabanmu Tepat!';
+      } else {
+        feedbackThemeClass = 'wrong-style';
+        feedbackTitle = '☄️ Kurang Tepat, Jangan Menyerah!';
+      }
+    }
+
+    contentEl.innerHTML = `
+      <div class="page">
+        <span class="tag ${s.tag}">${s.tagText}</span>
+        <h1 class="page-title" style="font-size:20px; margin-top:4px;">${s.title}</h1>
+        <p class="lead">${s.lead}</p>
+        
+        ${s.illus()}
+
+        <div class="quiz-q">${s.q}</div>
+        <div class="quiz-options">${optionsHtml}</div>
+
+        <div id="feedback" class="feedback-box ${isShowFeedback} ${feedbackThemeClass}">
+          <div id="feedback-title" style="font-weight:800; font-family:'Baloo 2'; font-size:14.5px;">${feedbackTitle}</div>
+          <div class="explanation-text"><b>Penjelasan Astronomi:</b><br>${s.explain}</div>
+        </div>
+      </div>
+    `;
+
+    btnPrev.disabled = false;
+    btnNext.disabled = false;
+    btnNext.textContent = (idx === SOAL_MISI.length - 1) ? "Hasil Akhir ▶" : "Lanjut ▶";
+    btnNext.className = "btn btn-primary";
+  }
+
+  refreshTrack();
+  document.getElementById('stage').scrollTop = 0;
+  
+  // Center active dot in layout scroll
+  const activeDot = trackEl.querySelector('.dot.active');
+  if (activeDot) activeDot.scrollIntoView({ inline: 'center', block: 'nearest' });
+}
+
+function ulangUjian() {
+  score = 0;
+  scoreValEl.textContent = "0";
+  answersState = Array(SOAL_MISI.length).fill(null);
+  buildTrack();
+  goTo(-1);
+}
+
+document.getElementById('btn-prev').addEventListener('click', () => {
+  goTo(currentIdx - 1);
+});
+
+document.getElementById('btn-next').addEventListener('click', () => {
+  goTo(currentIdx + 1);
+});
+
+// Run Init
+buildTrack();
+goTo(-1);
+</script>
+</body>
+</html>
